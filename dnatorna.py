@@ -1,5 +1,6 @@
 """
 Convert DNA sequences to RNA.
+The output is the same case status(upper or lower case) as input.
 """
 
 def rna(seq):
