@@ -23,14 +23,14 @@ def ecdf(data):
 
     return x, y
 
-def ecdf_plot(data, value, hue=None, formal=False, buff=0.1, min_x=None, max_x=None,
+def ecdf_plot(data, value, hue=None, formal=False, buff=0.1, min_x=None, max_x=None, 
               ax=None):
     """
     Generate `x` and `y` values for plotting an ECDF.
 
     Parameters
     ----------
-    df : Pandas DataFrame
+    data : Pandas DataFrame
         Tidy DataFrame with data sets to be plotted.
     value : column name of DataFrame
         Name of column that contains data to make ECDF with.
@@ -67,7 +67,7 @@ def ecdf_plot(data, value, hue=None, formal=False, buff=0.1, min_x=None, max_x=N
         ax.set_ylabel('ECDF')
 
     if hue is None:
-        x, y = ecdf(df[value], formal=formal, buff=buff, min_x=min_x, max_x=max_x)
+        x, y = ecdf(data[value], formal=formal, buff=buff, min_x=min_x, max_x=max_x)
 
         # Make plots
         if formal:
@@ -75,7 +75,7 @@ def ecdf_plot(data, value, hue=None, formal=False, buff=0.1, min_x=None, max_x=N
         else:
             _ = ax.plot(x, y, marker='.', linestyle='none')
     else:
-        gb = df.groupby(hue)
+        gb = data.groupby(hue)
         ecdfs = gb[value].apply(ecdf, formal=formal, buff=buff, min_x=min_x, max_x=max_x)
 
         # Make plots
@@ -90,7 +90,7 @@ def ecdf_plot(data, value, hue=None, formal=False, buff=0.1, min_x=None, max_x=N
         ax.legend(ecdfs.index, loc=0)
 
     return ax
-    
+
 
 def bs_replicate(data, func=np.mean):
     """Compute a bootstrap replicate for data, doing the 'func' function."""
